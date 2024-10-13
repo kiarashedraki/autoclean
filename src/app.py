@@ -1,12 +1,11 @@
 import datetime
 import logging
 import os
-from typing import Any, Dict, List, Union
 
 from beanie import Document, init_beanie
 from bson import ObjectId
 from dotenv import load_dotenv
-from fastapi import Body, FastAPI, HTTPException, Request
+from fastapi import Body, FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -56,19 +55,7 @@ class UserProfile(Document):
 async def init_db():
     """Initialize database connection and Beanie models."""
     client = AsyncIOMotorClient(MONGO_URL)
-    await init_beanie(database=client[DATABASE_NAME], document_models=[UserProfile, Reservation, ReservationIncoming, User])
-
-
-@app.get("/")
-async def root(request: Request):
-    """Root endpoint to return the cleaning schedule."""
-    cleaning_schedule = [
-        {"date": "2024-09-01", "address": "1234 Main St", "guests_count": 4,
-            "checkout_date": "2024-09-05", "status": "Confirmed"},
-        {"date": "2024-09-02", "address": "5678 Elm St", "guests_count": 2,
-            "checkout_date": "2024-09-06", "status": "Pending"},
-    ]
-    return templates.TemplateResponse("index.html", {"request": request, "schedule": cleaning_schedule})
+    await init_beanie(database=client[DATABASE_NAME], document_models=[UserProfile, Reservation, ReservationIncoming])
 
 
 @app.get("/schedule", response_class=HTMLResponse)
