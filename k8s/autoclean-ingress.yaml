@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: autoclean-ingress
+  annotations:
+    kubernetes.io/ingress.class: "nginx" # Assuming you are using nginx ingress controller
+    cert-manager.io/cluster-issuer: "letsencrypt-prod" # If using cert-manager
+spec:
+  tls:
+    - hosts:
+        - autoclean.techhubai.com
+      secretName: autoclean-techhubai-tls # This will store the TLS certificate
+  rules:
+    - host: autoclean.techhubai.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: autoclean-service
+                port:
+                  number: 80

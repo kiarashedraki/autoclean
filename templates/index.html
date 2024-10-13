@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cleaning Schedule</title>
+  </head>
+  <body>
+    <h1>Cleaning Schedule</h1>
+    <table border="1">
+      <tr>
+        <th>Date</th>
+        <th>Address</th>
+        <th>Guests Count</th>
+        <th>Checkout Date</th>
+        <th>Booking Status</th>
+      </tr>
+      {% for entry in schedule %}
+      <tr>
+        <td>{{ entry.date }}</td>
+        <td>{{ entry.address }}</td>
+        <td>{{ entry.guests_count }}</td>
+        <td>{{ entry.checkout_date }}</td>
+        <td>{{ entry.status }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </body>
+</html>
